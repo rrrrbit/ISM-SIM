@@ -47,6 +47,41 @@ public class MGR_gameMaths : MonoBehaviour, IGameMaths
     float[,] niDelta;
     float[,] inNext;
     float[,] iiNext;
+
+    public struct NodeStats
+    {
+        public float complexity;
+        public BumpCurveParams complexityTolerance;
+        public MagicCurveParams enthusiasm;
+        public float reach;
+        public MagicCurveParams suggestibility; // rename conformity...?
+        public MagicCurveParams adherence;
+        public float extroversion;
+        public float avoidance;
+
+        public static NodeStats operator +(NodeStats a, NodeStats b) => new()
+        {
+            complexity = a.complexity + b.complexity,
+            complexityTolerance = a.complexityTolerance + b.complexityTolerance,
+            enthusiasm = a.enthusiasm + b.enthusiasm,
+            reach = a.reach + b.reach,
+            suggestibility = a.suggestibility + b.suggestibility,
+            adherence = a.adherence + b.adherence,
+            extroversion = a.extroversion + b.extroversion,
+            avoidance = a.avoidance + b.avoidance,
+        };
+        public static NodeStats operator *(NodeStats a, float b) => new()
+        {
+            complexity = a.complexity * b,
+            complexityTolerance = a.complexityTolerance * b,
+            enthusiasm = a.enthusiasm * b,
+            reach = a.reach * b,
+            suggestibility = a.suggestibility * b,
+            adherence = a.adherence * b,
+            extroversion = a.extroversion * b,
+            avoidance = a.avoidance * b,
+        };
+    }
     [Header("- Node Stats")]
     public NodeStats[] nodeStats;
 	public NodeStats[] nodeStatsDelta;
@@ -62,7 +97,54 @@ public class MGR_gameMaths : MonoBehaviour, IGameMaths
     public List<float> debugFlatMtx;
     #endregion
 
-#region utilities
+    #region utilities
+    [Serializable]
+    public struct MagicCurveParams
+    {
+        public float thresholdPos;
+        public float thresholdNeg;
+
+        public float strengthPos;
+        public float strengthNeg;
+
+        public static MagicCurveParams operator +(MagicCurveParams a, MagicCurveParams b) => new()
+        {
+            thresholdNeg = a.thresholdNeg + b.thresholdNeg,
+            thresholdPos = a.thresholdPos + b.thresholdPos,
+            strengthNeg = a.strengthPos + b.strengthNeg,
+            strengthPos = a.strengthPos + b.strengthPos,
+        };
+
+        public static MagicCurveParams operator *(MagicCurveParams a, float b) => new()
+        {
+            thresholdPos = a.thresholdPos * b,
+            thresholdNeg = a.thresholdNeg * b,
+            strengthNeg = a.strengthPos * b,
+            strengthPos = a.strengthPos * b,
+        };
+    }
+    [Serializable]
+    public struct BumpCurveParams
+    {
+        public float center;
+        public float peak;
+        public float width;
+        public float steepness;
+        public static BumpCurveParams operator +(BumpCurveParams a, BumpCurveParams b) => new()
+        {
+            center = a.center + b.center,
+            peak = a.peak + b.peak,
+            width = a.width + b.width,
+            steepness = a.steepness + b.steepness,
+        };
+        public static BumpCurveParams operator *(BumpCurveParams a, float b) => new()
+        {
+            center = a.center * b,
+            peak = a.peak * b,
+            width = a.width * b,
+            steepness = a.steepness * b,
+        };
+    }
     /// <summary>
     /// Parametric f(x) with an optional threshold and asymmetric shape. <a href="https://www.desmos.com/calculator/ygh3492ofo">See demo.</a>
     /// </summary>
@@ -687,111 +769,4 @@ public class AdjacencyMtx
         }
         return flat;
     }
-}
-
-[Serializable]
-public struct MagicCurveParams
-{
-    public float thresholdPos;
-    public float thresholdNeg;
-    
-    public float strengthPos;
-    public float strengthNeg;
-
-    public static MagicCurveParams operator +(MagicCurveParams a, MagicCurveParams b)
-    {
-        return new()
-        {
-            thresholdNeg = a.thresholdNeg + b.thresholdNeg,
-            thresholdPos = a.thresholdPos + b.thresholdPos,
-
-            strengthNeg = a.strengthPos + b.strengthNeg,
-            strengthPos = a.strengthPos + b.strengthPos,
-        };
-    }
-
-	public static MagicCurveParams operator *(MagicCurveParams a, float b)
-	{
-        return new()
-        {
-            thresholdPos = a.thresholdPos * b,
-            thresholdNeg = a.thresholdNeg * b,
-
-            strengthNeg = a.strengthPos * b,
-            strengthPos = a.strengthPos * b,
-        };
-	}
-}
-
-[Serializable]
-public struct BumpCurveParams
-{
-    public float center;
-    public float peak;
-    public float width;
-    public float steepness;
-	public static BumpCurveParams operator +(BumpCurveParams a, BumpCurveParams b)
-	{
-		return new()
-		{
-			center = a.center + b.center,
-			peak = a.peak + b.peak,
-			width = a.width + b.width,
-			steepness = a.steepness + b.steepness,
-		};
-	}
-
-	public static BumpCurveParams operator *(BumpCurveParams a, float b)
-	{
-		return new()
-		{
-			center = a.center * b,
-			peak = a.peak * b,
-			width = a.width * b,
-			steepness = a.steepness * b,
-		};
-	}
-}
-
-[Serializable]
-public struct NodeStats
-{
-    public float complexity;
-    public BumpCurveParams complexityTolerance;
-    public MagicCurveParams enthusiasm;
-    public float reach;
-    public MagicCurveParams suggestibility; // rename conformity...?
-    public MagicCurveParams adherence;
-    public float extroversion;
-    public float avoidance;
-
-	public static NodeStats operator +(NodeStats a, NodeStats b)
-	{
-		return new()
-		{
-			complexity = a.complexity + b.complexity,
-			complexityTolerance = a.complexityTolerance + b.complexityTolerance,
-			enthusiasm = a.enthusiasm + b.enthusiasm,
-			reach = a.reach + b.reach,
-			suggestibility = a.suggestibility + b.suggestibility,
-			adherence = a.adherence + b.adherence,
-            extroversion = a.extroversion + b.extroversion,
-            avoidance = a.avoidance + b.avoidance,
-		};
-	}
-
-	public static NodeStats operator *(NodeStats a, float b)
-	{
-		return new()
-		{
-			complexity = a.complexity * b,
-			complexityTolerance = a.complexityTolerance * b,
-			enthusiasm = a.enthusiasm * b,
-			reach = a.reach * b,
-			suggestibility = a.suggestibility * b,
-			adherence = a.adherence * b,
-            extroversion = a.extroversion * b,
-            avoidance = a.avoidance * b,
-		};
-	}
 }

@@ -48,7 +48,7 @@ public class UI_nodeViewer : MonoBehaviour
 
     void UpdateViewer()
     {
-        NodeStats stats = game.nodeStats[nodeIndex];
+        MGR_gameMaths.NodeStats stats = game.nodeStats[nodeIndex];
         texts.text = (
               "Complexity: " + Round(stats.complexity) +
             "\nComplexity Tolerance: " + Round(stats.complexityTolerance.width) + 

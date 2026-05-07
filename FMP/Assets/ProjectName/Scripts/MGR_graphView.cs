@@ -50,8 +50,8 @@ public class MGR_graphView : MonoBehaviour, IGraphView
 	MGR_gameMaths gameMaths;
 	AdjacencyMtx graph;
 	VisualNode[] obj;
-	Vector2[] p, v, a;
-	float[] r;
+	public Vector2[] p, v, a;
+	public float[] r;
 
 	private void Awake()
 	{
@@ -136,7 +136,7 @@ public class MGR_graphView : MonoBehaviour, IGraphView
 			}
 
 		}
-        for (int i = 0; i < nodeCount; i++) // integrate
+        for (int i = 0; i < nodeCount; i++) // integrate and update transform
         {
             if (!float.IsFinite(a[i].sqrMagnitude))
             {

@@ -9,8 +9,8 @@ public class VisualNodePerson : VisualNode, IPointerEnterHandler, IPointerExitHa
     [SerializeField] float[] niEdges;
     [SerializeField] float[] inEdges;
     [SerializeField] float[] nnEdgesTo;
-    [SerializeField] NodeStats stats;
-    [SerializeField] NodeStats dstats;
+    [SerializeField] MGR_gameMaths.NodeStats stats;
+    [SerializeField] MGR_gameMaths.NodeStats dstats;
     [SerializeField] bool mouseOver;
     [SerializeField] bool dragging;
     [SerializeField] Vector2 toMouse;
