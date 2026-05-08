@@ -15,7 +15,7 @@ public class EDITOR_GameCamera : Editor
         GameCamera gameCamera = (GameCamera)target;
         if (GUILayout.Button("Reload Zoom Easing Settings"))
         {
-            gameCamera.InitialiseZoomEasing();
+            gameCamera.InitZoomEasing();
         }
     }
 }
@@ -44,11 +44,11 @@ public class GameCamera : MonoBehaviour
         input = Managers.Get<MGR_input>();
         backCam = GetComponent<Camera>();
         input.OnInputReady += AddCallbacks;
-        zoomEasingSettings.token.Reload += InitialiseZoomEasing;
-        InitialiseZoomEasing();
+        zoomEasingSettings.token.Reload += InitZoomEasing;
+        InitZoomEasing();
     }
 
-    public void InitialiseZoomEasing()
+    public void InitZoomEasing()
     {
         SpringSettings settings = zoomEasingSettings;
         zoomEasing = new(currentZoom, settings.frequency, settings.damping, settings.response);

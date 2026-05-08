@@ -25,8 +25,8 @@ public class EdgeDrawer : MonoBehaviour
     [SerializeField] bool normaliseWeight = true;
     [SerializeField] float colourMinWeight = -2f;
 	[SerializeField] float colourMaxWeight = 2f;
-
-	[SerializeField] bool constantScreenWidth = true;
+    [SerializeField] bool constantScreenWidth = true;
+    [SerializeField] float fadeTime = 0.25f;
 
 	Vector2Int[] edgePairs;
 
@@ -74,24 +74,33 @@ public class EdgeDrawer : MonoBehaviour
             }
         }
 
-		UpdateEdges();
+		UpdateEdges(Time.deltaTime);
 		UpdateMesh();
 	}
-    void UpdateEdges()
+    // Update is called once per frame
+    void Update()
+    {
+		UpdateEdges( Time.deltaTime);
+		UpdateMesh();
+		UpdateColours();
+	}
+
+    void UpdateEdges(float dt)
     {
 		for (int pair = 0; pair < edgePairs.Length; pair++)
 		{
 			MGR_graphView.VisualNodeProperties from = view.vn[edgePairs[pair].x];
 			MGR_graphView.VisualNodeProperties to = view.vn[edgePairs[pair].y];
 
-			float weight = mtx[edgePairs[pair].x, edgePairs[pair].y];
+			float scaleMult = (constantScreenWidth ? ((cam.currentZoom-maxWorldScale) /(1-Mathf.Exp(cam.currentZoom - maxWorldScale))) + maxWorldScale : 1);
+			
+            float weight = mtx[edgePairs[pair].x, edgePairs[pair].y];
 			Vector2 dir = (to.p - from.p).normalized;
             Vector2 perp = new(-dir.y, dir.x);
 
-            edges[pair].from = from.p + dir * from.r * 0.9f + perp * offCenter; 
-			edges[pair].to = to.p - dir * to.r + perp * offCenter;
+            edges[pair].from = from.p + dir * from.r * 0.9f + perp * offCenter * scaleMult; 
+			edges[pair].to = to.p - dir * to.r + perp * offCenter * scaleMult;
 
-			float scaleMult = (constantScreenWidth ? ((cam.currentZoom-maxWorldScale) /(1-Mathf.Exp(cam.currentZoom - maxWorldScale))) + maxWorldScale : 1);
 
 
             edges[pair].width = width * widthByWeight.Evaluate(Mathf.Abs(weight) / (normaliseWeight ? view.graph.maxAbsWeight : 1f)) * scaleMult;
@@ -103,9 +112,15 @@ public class EdgeDrawer : MonoBehaviour
 
             edges[pair]. fadeLength = fadeLength * scaleMult;
 
-            edges[pair].uvFrom = new Vector2(u, vFrom);
-			edges[pair].uvTo = new Vector2(u,vTo);
-            edges[pair].uvMiddle = new Vector2(u, vMiddle);
+            float vFromNext = Mathf.MoveTowards(edges[pair].uvFrom.y, vFrom, dt / fadeTime);
+            float vMiddleNext = Mathf.MoveTowards(edges[pair].uvMiddle.y, vMiddle, dt / fadeTime);
+            float vToNext= Mathf.MoveTowards(edges[pair].uvTo.y, vTo, dt / fadeTime);
+
+
+
+            edges[pair].uvFrom = new Vector2(u, vFromNext);
+            edges[pair].uvMiddle = new Vector2(u, vMiddleNext);
+			edges[pair].uvTo = new Vector2(u, vToNext);
         }
 	}
 
@@ -221,11 +236,4 @@ public class EdgeDrawer : MonoBehaviour
 		mf.mesh.triangles = tris;
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
-		UpdateEdges();
-		UpdateMesh();
-		UpdateColours();
-	}
 }

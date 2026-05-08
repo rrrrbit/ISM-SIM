@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 
 public class MGR_input : MonoBehaviour, IInput
 {
@@ -25,7 +26,8 @@ public class MGR_input : MonoBehaviour, IInput
 
     // Update is called once per frame
     void Update()
-    {
-        
+
     }
+
+    
 }
