@@ -13,10 +13,13 @@ public class EdgeDrawer : MonoBehaviour
 
     Vector3[] verts;
     int[] tris;
+	Vector2[] uvs;
 
-    [SerializeField] AnimationCurve widthByWeight;
-    
-    Vector2Int[] edgePairs;
+	[SerializeField] AnimationCurve widthByWeight;
+	[SerializeField] float colourMinWeight = -2f;
+	[SerializeField] float colourMaxWeight = 2f;
+
+	Vector2Int[] edgePairs;
 
 	public float offCenter = 0.1f;
 	public float arrowHeadSize = 3f;
@@ -24,7 +27,7 @@ public class EdgeDrawer : MonoBehaviour
     {
         public Vector3 from, to;
         public float width;
-        public Color colour;
+		public Vector2 uv;
     }
     Edge[] edges;
 
@@ -41,6 +44,7 @@ public class EdgeDrawer : MonoBehaviour
 		}
 
 		verts = new Vector3[edgePairs.Length * 5];
+		uvs = new Vector2[edgePairs.Length * 5];
 		tris = new int[edgePairs.Length * 3 * 3];
 
 		mf = GetComponent<MeshFilter>();
@@ -71,16 +75,23 @@ public class EdgeDrawer : MonoBehaviour
 			edges[pair].from = from.p + dir * from.r; // r could be removed
 			edges[pair].to = to.p - dir * to.r;
 			edges[pair].width = widthByWeight.Evaluate(Mathf.Abs(weight) / view.graph.maxAbsWeight);
-
-			if (weight >= 0)
-			{
-				edges[pair].colour = Color.green;
-			}
-			else
-			{
-				edges[pair].colour = Color.red;
-			}
+			edges[pair].uv = new Vector2((weight - colourMinWeight) / (colourMaxWeight - colourMinWeight), 0);
 		}
+	}
+
+	void UpdateColours()
+	{
+		int vert = 0;
+		foreach(Edge edge in edges)
+		{
+			uvs[vert++] = edge.uv;
+			uvs[vert++] = edge.uv;
+			uvs[vert++] = edge.uv;
+			uvs[vert++] = edge.uv;
+			uvs[vert++] = edge.uv;
+		}
+
+		mf.mesh.uv = uvs;
 	}
 
 	void UpdateMesh()
@@ -139,5 +150,6 @@ public class EdgeDrawer : MonoBehaviour
     {
 		UpdateEdges();
 		UpdateMesh();
+		UpdateColours();
 	}
 }
