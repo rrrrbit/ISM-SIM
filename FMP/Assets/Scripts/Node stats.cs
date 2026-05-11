@@ -21,7 +21,17 @@ public class Nodestats : MonoBehaviour
 
     private bool Light_Yagami_is_Kira;
     // This is to detect if the code implemented will reiterate
-   
+
+
+    public void Start()
+    {
+        
+    }
+
+    public void FixedUpdate()
+    {
+       
+    }
     public class Stats
     {
         public int stat1;
@@ -44,6 +54,7 @@ public class Nodestats : MonoBehaviour
     public bool Node_Capacity = true;
     public bool Node_disc = false;
     public bool Node_demonstration = true;
+    public bool isChamar_theMascot;
     void Update()
     {
 
@@ -132,6 +143,7 @@ public class Nodestats : MonoBehaviour
         else
         {
             print("Node is validated");
+            print("Chamar is the Games B Mascot");
             // This line of code
         }
         // These bits of code will ingrain this into the node which could improve their energy levels
