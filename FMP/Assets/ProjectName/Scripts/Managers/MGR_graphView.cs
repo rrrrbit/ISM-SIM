@@ -20,7 +20,11 @@ public class MGR_graphView : MonoBehaviour
 	public bool applyIN;
 	public bool applyII;
 
-	[Header("Forces")]
+	[Header("Edge")]
+	public EdgeDrawer edgeDrawerPrefab;
+	public Dictionary<float[,], EdgeDrawer> edgeDrawers;
+
+    [Header("Forces")]
 	public float padding = 10f;
 	public bool useScale = true;
 	public bool normaliseWeights = true;
@@ -110,9 +114,24 @@ public class MGR_graphView : MonoBehaviour
 
 			visualIdeas.Add(newNode);
 		}
-	}
 
-	void UpdateView(float dt)
+		AddEdgeDrawer(gameMaths.NN, visualNodes, visualNodes);
+        AddEdgeDrawer(gameMaths.NI, visualNodes, visualIdeas);
+		AddEdgeDrawer(gameMaths.IN, visualIdeas, visualNodes);
+		AddEdgeDrawer(gameMaths.II, visualIdeas, visualIdeas);
+    }
+
+	void AddEdgeDrawer(float[,] mtx, List<VisualNode> nodesFrom, List<VisualNode> nodesTo)
+	{
+		if (edgeDrawers.ContainsKey(mtx)) return;
+		EdgeDrawer newDrawer = Instantiate(edgeDrawerPrefab);
+		newDrawer.nodesFrom = nodesFrom;
+		newDrawer.nodesTo = nodesTo;
+		newDrawer.mtx = mtx;
+		edgeDrawers[mtx] = newDrawer;
+    }
+
+    void UpdateView(float dt)
 	{
 
 	}
