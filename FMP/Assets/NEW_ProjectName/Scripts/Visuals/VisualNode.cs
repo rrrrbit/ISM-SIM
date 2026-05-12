@@ -4,17 +4,17 @@ using static MGR_graphView;
 
 public class VisualNode : MonoBehaviour
 {
-	public int id;
-	public bool onScreen = true;
-	public float r;
-	public MGR_graphView graphView;
-	public MGR_gameMaths gameMaths;
-	public Rigidbody2D rb;
-	public SpriteRenderer sr;
+    public int id;
+    public bool onScreen = true;
+    public float r;
+    public MGR_graphView graphView;
+    public MGR_gameMaths gameMaths;
+    public Rigidbody2D rb;
+    public SpriteRenderer sr;
 
-	// will handle clicks
+    // will handle clicks
 
-	private void OnBecameVisible()
+    private void OnBecameVisible()
     {
         onScreen = true;
     }

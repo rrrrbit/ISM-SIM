@@ -1,4 +1,4 @@
-//bear witness
+//from old main branch
 namespace RBitUtils
 {
 	using System;
