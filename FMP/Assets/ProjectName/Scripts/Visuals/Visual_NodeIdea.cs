@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class VisualNodeIdea : VisualNode
+public class Visual_NodeIdea : Visual_Node
 {
-    public TextMeshPro text;
+    [SerializeField] TextMeshPro text;
 
     void Update()
     {
@@ -32,7 +32,7 @@ public class VisualNodeIdea : VisualNode
 
         Vector2 totalForce = Vector2.zero;
 
-        r = MGR_game.visuals.sizeByIndegree.Evaluate(MGR_game.mtx.NN.Indegree(id)) * (MGR_game.visuals.useScale ? 1 : 0);
+        r = MGR_game.visuals.sizeByIndegree.Evaluate(MGR_game.mtx.II.Indegree(id)) * (MGR_game.visuals.useScale ? 1 : 0);
 
         totalForce += CenteringForce(MGR_game.visuals.centeringStrength);
         totalForce += DragForce(MGR_game.visuals.dragStrength);

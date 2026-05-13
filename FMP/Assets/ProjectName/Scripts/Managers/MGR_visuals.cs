@@ -48,21 +48,21 @@ public class MGR_visuals : MonoBehaviour
 	}
 	public RepulsionTypes repulsionType;
 	[Header("Runtime & Refs")]
-	public EdgeDrawer edgeDrawerPrefab;
-	public VisualNodePerson visualNodePrefab;
-	public VisualNodeIdea visualIdeaPrefab;
-	public Dictionary<float[,], EdgeDrawer> edgeDrawers;
+	public Visual_EdgeDrawer edgeDrawerPrefab;
+	public Visual_NodeSocial visualNodePrefab;
+	public Visual_NodeIdea visualIdeaPrefab;
+	public Dictionary<float[,], Visual_EdgeDrawer> edgeDrawers;
 
 	public struct VisualNodeProperties
 	{
-		public VisualNode obj;
+		public Visual_Node obj;
 		public Vector2 p, v, a;
 		public float r;
 	}
 	public VisualNodeProperties[] vn;
 
-	public List<VisualNode> visualNodes;
-	public List<VisualNode> visualIdeas;
+	public List<Visual_Node> visualNodes;
+	public List<Visual_Node> visualIdeas;
 
 	private void Awake()
 	{
@@ -79,10 +79,10 @@ public class MGR_visuals : MonoBehaviour
 
 	void Init()
 	{
-		visualNodes = new List<VisualNode>();
+		visualNodes = new List<Visual_Node>();
 		for (int i = 0; i < MGR_game.mtx.nodesCount; i++)
 		{
-			VisualNodePerson newNode = Instantiate(visualNodePrefab);
+			Visual_NodeSocial newNode = Instantiate(visualNodePrefab);
 			newNode.id = i;
 			newNode.gameObject.name = "Node " + newNode.id.ToString();
 			newNode.transform.position = Random.insideUnitCircle * 10;
@@ -91,10 +91,10 @@ public class MGR_visuals : MonoBehaviour
 		}
 
 
-		visualIdeas = new List<VisualNode>();
+		visualIdeas = new List<Visual_Node>();
 		for (int i = 0; i < MGR_game.mtx.ideasCount; i++)
 		{
-			VisualNodeIdea newNode = Instantiate(visualIdeaPrefab);
+			Visual_NodeIdea newNode = Instantiate(visualIdeaPrefab);
 			newNode.id = i;
 			newNode.gameObject.name = "Idea " + newNode.id.ToString();
 			newNode.transform.position = Random.insideUnitCircle * 10;
@@ -102,17 +102,17 @@ public class MGR_visuals : MonoBehaviour
 			visualIdeas.Add(newNode);
 		}
 
-		edgeDrawers = new Dictionary<float[,], EdgeDrawer>();
+		edgeDrawers = new Dictionary<float[,], Visual_EdgeDrawer>();
 		AddEdgeDrawer(MGR_game.mtx.NN, visualNodes, visualNodes, "EdgeDrawer_NN");
         AddEdgeDrawer(MGR_game.mtx.NI, visualNodes, visualIdeas, "EdgeDrawer_NI");
 		AddEdgeDrawer(MGR_game.mtx.IN, visualIdeas, visualNodes, "EdgeDrawer_IN");
 		AddEdgeDrawer(MGR_game.mtx.II, visualIdeas, visualIdeas, "EdgeDrawer_II");
     }
 
-	void AddEdgeDrawer(float[,] mtx, List<VisualNode> nodesFrom, List<VisualNode> nodesTo, string name = "EdgeDrawer")
+	void AddEdgeDrawer(float[,] mtx, List<Visual_Node> nodesFrom, List<Visual_Node> nodesTo, string name = "EdgeDrawer")
 	{
 		if (edgeDrawers.ContainsKey(mtx))return;
-		EdgeDrawer edgeDrawer = Instantiate(edgeDrawerPrefab);
+		Visual_EdgeDrawer edgeDrawer = Instantiate(edgeDrawerPrefab);
 		edgeDrawer.gameObject.name = name;
 		edgeDrawer.nodesFrom = nodesFrom;
 		edgeDrawer.nodesTo = nodesTo;

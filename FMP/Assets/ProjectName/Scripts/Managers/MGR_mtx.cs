@@ -214,7 +214,7 @@ public class MGR_mtx : MonoBehaviour
     #endregion
 
 #region main
-    private void Start()
+    void Start()
     {   
         InitLists();
         InitStats();
@@ -223,7 +223,7 @@ public class MGR_mtx : MonoBehaviour
         OnReadyForVisualisation?.Invoke();
     }
 
-    private void Update()
+    void Update()
     {
         UpdateMtxStats();
         Step(Time.deltaTime * timescale);
@@ -636,8 +636,8 @@ public class MGR_mtx : MonoBehaviour
 [Serializable]
 public class Node
 {
-	public VisualNode visual;
-	public static implicit operator VisualNode(Node node) => node.visual;
+	public Visual_Node visual;
+	public static implicit operator Visual_Node(Node node) => node.visual;
 }
 
 public class PersonNode : Node
@@ -647,8 +647,8 @@ public class PersonNode : Node
 
 public class IdeaNode : Node
 {
-    //public VisualNode visual;
-    //public static implicit operator VisualNode(Node node) => node.visual;
+    //public Visual_Node visual;
+    //public static implicit operator Visual_Node(Node node) => node.visual;
 }
 
 public static class MtxUtils

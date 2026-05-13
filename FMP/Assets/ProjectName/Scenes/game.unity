@@ -172,7 +172,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -506,8 +506,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2090233356}
   m_HandleRect: {fileID: 2090233355}
   m_Direction: 0
-  m_Value: 0.99999917
-  m_Size: 0.75100404
+  m_Value: 1.000005
+  m_Size: 0.74887526
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -614,7 +614,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1
+  orthographic size: 9.14
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -709,9 +709,8 @@ MonoBehaviour:
   zoomMin: 1
   zoomMax: 10
   zoomInterval: 1.2
+  cameras: []
   currentZoom: 5
-  midCam: {fileID: 2138412822}
-  frontCam: {fileID: 25208400}
   targetZoom: 8
   zoomEasingSettings:
     useToken: 1
@@ -1080,7 +1079,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -123.99999, y: 193.77997}
+  m_AnchoredPosition: {x: -124.0006, y: 193.78075}
   m_SizeDelta: {x: 498, y: 691.86}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &564968367
@@ -1592,7 +1591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4507d7a8d0059174ca2af23eb4dce3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 330585548}
 --- !u!114 &884068272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1606,8 +1605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timescale: 1
-  startingNumberPeople: 0
-  startingNumberIdeas: 0
+  startingNumberPeople: 25
+  startingNumberIdeas: 5
   nodeStatsMin:
     complexity: -16
     complexityTolerance:
@@ -1677,24 +1676,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be0e4d764b71394f849530cd108f99d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pairwiseForceThreshold: 0
   sizeByIndegree:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 25
-      outSlope: 25
+      value: 1
+      inSlope: 0.02
+      outSlope: 0.02
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 2
-      value: 50
-      inSlope: 25
-      outSlope: 25
+      time: 50
+      value: 2
+      inSlope: 0.02
+      outSlope: 0.02
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -1702,6 +1700,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  pairForceWeightThreshold: 0
   showNodes: 1
   showIdeas: 0
   applyNN: 1
@@ -1744,12 +1743,9 @@ MonoBehaviour:
   attractionType: 2
   repulsionStrength: 100
   repulsionType: 1
-  edgeDrawerPrefab: {fileID: 0}
-  cam: {fileID: 0}
-  visualNodePrefab: {fileID: 0}
-  visualIdeaPrefab: {fileID: 0}
-  nodeCount: 0
-  gameMaths: {fileID: 0}
+  edgeDrawerPrefab: {fileID: 5646215188841465465, guid: 234478f84c2f8104a9ee76d503fa0b7b, type: 3}
+  visualNodePrefab: {fileID: 5926034686447053472, guid: e4227e8697f29a146bcde6987d96a048, type: 3}
+  visualIdeaPrefab: {fileID: 7114069883873563681, guid: fca1452ae1a5a1647896b1cbd4b26648, type: 3}
   visualNodes: []
   visualIdeas: []
 --- !u!114 &884068274
@@ -1761,9 +1757,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 884068264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd77a426b93f6df4d9d585be0b86a9e7, type: 3}
+  m_Script: {fileID: 11500000, guid: fdad6cf0c9d2d05498df4bac1e4c7b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instanceMtx: {fileID: 884068272}
+  instanceVisuals: {fileID: 884068273}
+  instanceInput: {fileID: 884068270}
+  instanceLevelUI: {fileID: 884068271}
 --- !u!1 &970499749
 GameObject:
   m_ObjectHideFlags: 0
@@ -2311,8 +2311,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 744623401}
   m_HandleRect: {fileID: 744623400}
   m_Direction: 2
-  m_Value: -0.00000015748572
-  m_Size: 0.7199145
+  m_Value: -0.0000037796574
+  m_Size: 0.71787363
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3122,7 +3122,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: -13.67
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

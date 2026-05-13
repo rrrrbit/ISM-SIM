@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class MGR_levelUI : MonoBehaviour
 {
-    VisualNode selectedNode;
+    Visual_Node selectedNode;
     public GameCamera cam;
+    public UI_nodeViewer nodeViewer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -15,5 +16,20 @@ public class MGR_levelUI : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void FocusNodeViewer(Visual_Node node)
+    {
+        nodeViewer.nodeIndex = node.id;
+    }
+
+    public void UnfocusNodeViewer()
+    {
+
+    }
+
+    public void FocusIdeaViewer(Visual_Node node)
+    {
+
     }
 }

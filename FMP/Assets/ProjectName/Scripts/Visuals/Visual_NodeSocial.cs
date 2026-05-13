@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class VisualNodePerson : VisualNode
+public class Visual_NodeSocial : Visual_Node
 {
 	[SerializeField] TextMeshPro text;
     [SerializeField] float[] niEdges;

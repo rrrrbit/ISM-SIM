@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EdgeDrawer : MonoBehaviour
+public class Visual_EdgeDrawer : MonoBehaviour
 {
 
-    public List<VisualNode> nodesFrom;
-    public List<VisualNode> nodesTo;
+    public List<Visual_Node> nodesFrom;
+    public List<Visual_Node> nodesTo;
 	public float[,] mtx;
     public bool show;
 
@@ -62,7 +62,6 @@ public class EdgeDrawer : MonoBehaviour
 		uvs = new Vector2[edgePairs.Length * vertCount];
 		tris = new int[edgePairs.Length * (vertCount-2) * 3];
 
-		mf = GetComponent<MeshFilter>();
 		mf.mesh = new Mesh();
 
 		int edgeIndex = 0;
@@ -97,8 +96,8 @@ public class EdgeDrawer : MonoBehaviour
     {
 		for (int pair = 0; pair < edgePairs.Length; pair++)
 		{
-			VisualNode from = nodesFrom[edgePairs[pair].x];
-			VisualNode to = nodesTo[edgePairs[pair].y];
+			Visual_Node from = nodesFrom[edgePairs[pair].x];
+			Visual_Node to = nodesTo[edgePairs[pair].y];
             GameCamera cam = MGR_game.levelUI.cam;
 
 			float scaleMult = constantScreenWidth ? ((cam.currentZoom-maxWorldScale) /(1-Mathf.Exp(cam.currentZoom - maxWorldScale))) + maxWorldScale : 1;
@@ -136,9 +135,9 @@ public class EdgeDrawer : MonoBehaviour
         WriteUV();
 
         mf.mesh.RecalculateBounds();
-        mf.mesh.uv = uvs;
         mf.mesh.vertices = verts;
         mf.mesh.triangles = tris;
+        mf.mesh.uv = uvs;
     }
     void WriteVerts()
     {
