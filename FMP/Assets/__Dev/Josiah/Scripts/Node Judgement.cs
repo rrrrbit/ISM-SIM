@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class NodeJudgement : MonoBehaviour
 {
     [Header("Node judgementation")]
-    public int Node_calculations = 4;
+    public int Node_calculations = 5;
     public bool Node_opinion;
     public bool Node_attitude;
     public bool Idea_judgement;
