@@ -1,8 +1,7 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
 using RBitUtils;
+using UnityEngine;
 
-public class UI_worldPointer : MonoBehaviour
+public class UI_screenPointer : MonoBehaviour
 {
     public Camera cam;
 
@@ -22,7 +21,7 @@ public class UI_worldPointer : MonoBehaviour
         prevPos = pos;
         prevRelativePos = relativePos;
 
-        transform.position = cam.ScreenToWorldPoint(MGR_game.input.generalActions.MousePos.ReadValue<Vector2>().xy(-cam.transform.position.z));
+        ((RectTransform)transform).anchoredPosition = MGR_game.input.generalActions.MousePos.ReadValue<Vector2>() / MGR_game.levelUI.canvas.scaleFactor;
         pos = transform.position;
         relativePos = pos - cam.transform.position;
 

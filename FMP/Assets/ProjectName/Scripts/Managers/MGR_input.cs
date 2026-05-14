@@ -7,8 +7,10 @@ public class MGR_input : MonoBehaviour
     public Input.GameActions gameActions;
     public Input.GeneralActions generalActions;
     public event System.Action OnInputReady;
+    public GameCamera cam;
 
-    public UI_worldPointer pointer;
+    public UI_worldPointer worldPointer;
+    public UI_screenPointer screenPointer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,7 +25,8 @@ public class MGR_input : MonoBehaviour
 
         OnInputReady?.Invoke();
 
-        pointer.cam = MGR_game.levelUI.cam.cameras[1];
+        worldPointer.cam = MGR_game.levelUI.uiCam;
+        screenPointer.cam = MGR_game.levelUI.uiCam;
     }
 
     // Update is called once per frame

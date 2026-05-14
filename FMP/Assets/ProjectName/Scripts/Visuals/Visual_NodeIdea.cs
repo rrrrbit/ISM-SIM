@@ -48,7 +48,7 @@ public class Visual_NodeIdea : Visual_Node
 
         if (dragging)
         {
-            Vector2 dMouse = (MGR_game.input.pointer.pos - transform.position);
+            Vector2 dMouse = (MGR_game.input.worldPointer.pos - transform.position);
             totalForce += dMouse.sqrMagnitude * dMouse.normalized;
         }
 

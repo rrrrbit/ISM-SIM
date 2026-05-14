@@ -98,7 +98,7 @@ public class Visual_EdgeDrawer : MonoBehaviour
 		{
 			Visual_Node from = nodesFrom[edgePairs[pair].x];
 			Visual_Node to = nodesTo[edgePairs[pair].y];
-            GameCamera cam = MGR_game.levelUI.cam;
+            GameCamera cam = MGR_game.input.cam;
 
 			float scaleMult = constantScreenWidth ? ((cam.currentZoom-maxWorldScale) /(1-Mathf.Exp(cam.currentZoom - maxWorldScale))) + maxWorldScale : 1;
 			

@@ -51,7 +51,7 @@ public class GameCamera : MonoBehaviour
         currentZoom.CheckChange(ref prevZoom, () =>
             ZoomAlignPos(
                 currentZoom / prevZoom,
-                input.pointer.pos.xy()
+                input.worldPointer.pos.xy()
                 )
             );
         transform.position += currentZoom * Time.deltaTime * input.gameActions.Pan.ReadValue<Vector2>().xy().Scaled(panSpeed);
@@ -73,7 +73,7 @@ public class GameCamera : MonoBehaviour
         if (input.gameActions.PanBtn.IsPressed())
         {
 
-            transform.position -= input.pointer.relativeDelta;
+            transform.position -= input.worldPointer.relativeDelta;
         }
     }
 

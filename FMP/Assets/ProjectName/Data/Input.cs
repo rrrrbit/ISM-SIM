@@ -184,6 +184,24 @@ public partial class @Input: IInputActionCollection2, IDisposable
             ""id"": ""c062df6f-a8d6-4ee0-94cb-67de467b62ad"",
             ""actions"": [
                 {
+                    ""name"": ""LMB"",
+                    ""type"": ""Button"",
+                    ""id"": ""71c4855f-1a35-421e-b05c-a7f5a25db281"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RMB"",
+                    ""type"": ""Button"",
+                    ""id"": ""6c2c4682-be41-455e-84ff-9f64c8b956d5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""MousePos"",
                     ""type"": ""Value"",
                     ""id"": ""ced733f2-8ff1-4643-b42b-ec1b7dc60add"",
@@ -299,6 +317,28 @@ public partial class @Input: IInputActionCollection2, IDisposable
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0cf5add4-8039-4c26-9e97-742f4dbff096"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LMB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51d4b5e5-7e13-4f91-8c48-931950dc0d41"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""RMB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -372,6 +412,8 @@ public partial class @Input: IInputActionCollection2, IDisposable
         m_Game_PanBtn = m_Game.FindAction("PanBtn", throwIfNotFound: true);
         // General
         m_General = asset.FindActionMap("General", throwIfNotFound: true);
+        m_General_LMB = m_General.FindAction("LMB", throwIfNotFound: true);
+        m_General_RMB = m_General.FindAction("RMB", throwIfNotFound: true);
         m_General_MousePos = m_General.FindAction("MousePos", throwIfNotFound: true);
         m_General_MouseDelta = m_General.FindAction("MouseDelta", throwIfNotFound: true);
         m_General_Scroll = m_General.FindAction("Scroll", throwIfNotFound: true);
@@ -563,6 +605,8 @@ public partial class @Input: IInputActionCollection2, IDisposable
     // General
     private readonly InputActionMap m_General;
     private List<IGeneralActions> m_GeneralActionsCallbackInterfaces = new List<IGeneralActions>();
+    private readonly InputAction m_General_LMB;
+    private readonly InputAction m_General_RMB;
     private readonly InputAction m_General_MousePos;
     private readonly InputAction m_General_MouseDelta;
     private readonly InputAction m_General_Scroll;
@@ -577,6 +621,14 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
         public GeneralActions(@Input wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "General/LMB".
+        /// </summary>
+        public InputAction @LMB => m_Wrapper.m_General_LMB;
+        /// <summary>
+        /// Provides access to the underlying input action "General/RMB".
+        /// </summary>
+        public InputAction @RMB => m_Wrapper.m_General_RMB;
         /// <summary>
         /// Provides access to the underlying input action "General/MousePos".
         /// </summary>
@@ -615,6 +667,12 @@ public partial class @Input: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_GeneralActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_GeneralActionsCallbackInterfaces.Add(instance);
+            @LMB.started += instance.OnLMB;
+            @LMB.performed += instance.OnLMB;
+            @LMB.canceled += instance.OnLMB;
+            @RMB.started += instance.OnRMB;
+            @RMB.performed += instance.OnRMB;
+            @RMB.canceled += instance.OnRMB;
             @MousePos.started += instance.OnMousePos;
             @MousePos.performed += instance.OnMousePos;
             @MousePos.canceled += instance.OnMousePos;
@@ -635,6 +693,12 @@ public partial class @Input: IInputActionCollection2, IDisposable
         /// <seealso cref="GeneralActions" />
         private void UnregisterCallbacks(IGeneralActions instance)
         {
+            @LMB.started -= instance.OnLMB;
+            @LMB.performed -= instance.OnLMB;
+            @LMB.canceled -= instance.OnLMB;
+            @RMB.started -= instance.OnRMB;
+            @RMB.performed -= instance.OnRMB;
+            @RMB.canceled -= instance.OnRMB;
             @MousePos.started -= instance.OnMousePos;
             @MousePos.performed -= instance.OnMousePos;
             @MousePos.canceled -= instance.OnMousePos;
@@ -771,6 +835,20 @@ public partial class @Input: IInputActionCollection2, IDisposable
     /// <seealso cref="GeneralActions.RemoveCallbacks(IGeneralActions)" />
     public interface IGeneralActions
     {
+        /// <summary>
+        /// Method invoked when associated input action "LMB" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLMB(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "RMB" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRMB(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "MousePos" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
