@@ -5,27 +5,40 @@ public class UI_screenPointer : MonoBehaviour
 {
     public Camera cam;
 
-    public Vector3 relativeDelta;
-    public Vector3 delta;
-    public Vector3 prevRelativePos;
+    RectTransform rt => transform as RectTransform;
     public Vector3 prevPos;
+    public Vector3 delta;
 
     /// <summary>
     /// Position in world units relative to the camera.
     /// </summary>
     public Vector3 relativePos;
-    public Vector3 pos;
+    public Vector3 prevRelative;
+    public Vector3 relativeDelta;
+
+    public Vector2 prevAnchored;
+    public Vector2 anchorPosDelta;
+
+    public Vector3 prevLocal;
+    public Vector3 localDelta;
 
     void Update()
     {
-        prevPos = pos;
-        prevRelativePos = relativePos;
-
+        // calc pos
         ((RectTransform)transform).anchoredPosition = MGR_game.input.generalActions.MousePos.ReadValue<Vector2>() / MGR_game.levelUI.canvas.scaleFactor;
-        pos = transform.position;
-        relativePos = pos - cam.transform.position;
+        relativePos = transform.position - cam.transform.position;
 
-        delta = pos - prevPos;
-        relativeDelta = relativePos - prevRelativePos;
+        //calc delta
+        delta = transform.position - prevPos;
+        relativeDelta = relativePos - prevRelative;
+        anchorPosDelta = rt.anchoredPosition - prevAnchored;
+        localDelta = rt.localPosition - prevLocal;
+
+
+        // set prev
+        prevPos = transform.position;
+        prevRelative = relativePos;
+        prevAnchored = rt.anchoredPosition;
+        prevLocal = rt.localPosition;
     }
 }
