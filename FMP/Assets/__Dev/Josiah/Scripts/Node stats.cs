@@ -28,10 +28,11 @@ public class Nodestats : MonoBehaviour
         
     }
 
-    public void FixedUpdate()
+    private void FixedUpdate()
     {
-       
+        
     }
+
     public class Stats
     {
         public int stat1;
@@ -70,7 +71,7 @@ public class Nodestats : MonoBehaviour
     public enum Statistics
     {
         Physics2D,
-        // Physics2D is a specialized simulation engine within game development (specifically Unity) used to managed two-dimensional Physical interactions. So it basically consists of two axes. There's more to explain, but it will overcomplicate things
+        // Physics2D is a specialized simulation engine within game development (specifically Unity) used to manage two-dimensional Physical interactions. So it basically consists of two axes. There's more to explain, but it will overcomplicate things
         Clarification,
         // To give the node an understanding on how it's supposed to operate 
         Consildation,
@@ -120,8 +121,8 @@ public class Nodestats : MonoBehaviour
 
     public void LIGHT_YAGAMI()
     {
-        while (gameObject.activeSelf)
-        {
+        while (gameObject.activeSelf)    
+        {  while (gameObject.activeSelf == true);
             // Code will continue to reiterate
         }
 
@@ -168,7 +169,10 @@ public class Nodestats : MonoBehaviour
             print("Size is overextending");
 
         } // There is a limit depending on what size the node reaches
+        while (true)
+        {
 
+        }
 
     }
 
@@ -185,7 +189,7 @@ public class Nodestats : MonoBehaviour
         {
             print("Demonstration is moderate");
         }
-       // This is how I will 
+       // This is how I will manage the Node VFX and see if it fits with how the node moves
     }
     
 
