@@ -31,7 +31,7 @@ public class Visual_Node : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         MGR_game.input.OnInputReady += InputCallbacks;
     }
 
-    void InputCallbacks()
+    public void InputCallbacks()
     {
         print("eoug");
         MGR_game.input.input.General.LMB.started += OnPointerDown;

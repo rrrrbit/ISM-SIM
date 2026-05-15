@@ -60,17 +60,7 @@ public class GameCamera : MonoBehaviour
             cam.orthographicSize = currentZoom;
         }
 
-        if (input.gameActions.PanBtn.WasPressedThisFrame())
-        {
-            // if click reaches the bg then pan.
-        }
-
-        if (input.gameActions.PanBtn.WasReleasedThisFrame())
-        {
-            // blehhh
-        }
-
-        if (input.gameActions.PanBtn.IsPressed())
+        if (MGR_game.levelUI.bg.dragging)
         {
 
             transform.position -= input.worldPointer.relativeDelta;

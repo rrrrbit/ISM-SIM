@@ -6,6 +6,7 @@ public class MGR_levelUI : MonoBehaviour
     public Camera uiCam;
     public Canvas canvas;
     public UI_nodeViewer nodeViewer;
+    public UI_bg bg;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

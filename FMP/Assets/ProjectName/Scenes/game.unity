@@ -565,9 +565,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf622e6233bf48f4a91d3f9198a3505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doing: 0
   action: {x: 0, y: 0}
   targetTransform: {fileID: 637802478}
+  doing: 0
   hovered: 0
 --- !u!114 &150275791
 MonoBehaviour:
@@ -838,9 +838,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf622e6233bf48f4a91d3f9198a3505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doing: 0
   action: {x: 0, y: 1}
   targetTransform: {fileID: 637802478}
+  doing: 0
   hovered: 0
 --- !u!114 &266335092
 MonoBehaviour:
@@ -1323,9 +1323,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf622e6233bf48f4a91d3f9198a3505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doing: 0
   action: {x: -1, y: 0}
   targetTransform: {fileID: 637802478}
+  doing: 0
   hovered: 0
 --- !u!114 &410505152
 MonoBehaviour:
@@ -1915,9 +1915,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf622e6233bf48f4a91d3f9198a3505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doing: 0
   action: {x: -1, y: -1}
   targetTransform: {fileID: 637802478}
+  doing: 0
   hovered: 0
 --- !u!114 &792225910
 MonoBehaviour:
@@ -2335,6 +2335,7 @@ MonoBehaviour:
   uiCam: {fileID: 25208400}
   canvas: {fileID: 873768631}
   nodeViewer: {fileID: 637802481}
+  bg: {fileID: 970499753}
 --- !u!114 &884068272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2455,7 +2456,7 @@ MonoBehaviour:
   normaliseWeights: 1
   symmetriseWeights: 0
   maxVel: 1000
-  mouseStrength: 0
+  mouseStrength: 1000
   centeringStrength: 0.001
   dragStrength: 5
   clusterStrength: 0
@@ -2519,6 +2520,7 @@ GameObject:
   - component: {fileID: 970499750}
   - component: {fileID: 970499752}
   - component: {fileID: 970499751}
+  - component: {fileID: 970499753}
   m_Layer: 6
   m_Name: Level Background Placeholder
   m_TagString: Untagged
@@ -2583,6 +2585,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 970499749}
   m_CullTransparentMesh: 1
+--- !u!114 &970499753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970499749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eecb44869913674f9d2c78c87eaf629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragging: 0
+  hovered: 0
 --- !u!1 &975027751
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,9 +3272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf622e6233bf48f4a91d3f9198a3505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doing: 0
   action: {x: 1, y: 0}
   targetTransform: {fileID: 637802478}
+  doing: 0
   hovered: 0
 --- !u!114 &1496374299
 MonoBehaviour:
@@ -3369,9 +3385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf622e6233bf48f4a91d3f9198a3505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doing: 0
   action: {x: 0, y: -1}
   targetTransform: {fileID: 637802478}
+  doing: 0
   hovered: 0
 --- !u!114 &1526657127
 MonoBehaviour:
@@ -3568,9 +3584,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf622e6233bf48f4a91d3f9198a3505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doing: 0
   action: {x: 1, y: -1}
   targetTransform: {fileID: 637802478}
+  doing: 0
   hovered: 0
 --- !u!114 &1647784101
 MonoBehaviour:
@@ -3699,9 +3715,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf622e6233bf48f4a91d3f9198a3505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doing: 0
   action: {x: 1, y: 1}
   targetTransform: {fileID: 637802478}
+  doing: 0
   hovered: 0
 --- !u!114 &1663708933
 MonoBehaviour:
@@ -4453,9 +4469,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf622e6233bf48f4a91d3f9198a3505e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doing: 0
   action: {x: -1, y: 1}
   targetTransform: {fileID: 637802478}
+  doing: 0
   hovered: 0
 --- !u!114 &2044495287
 MonoBehaviour:

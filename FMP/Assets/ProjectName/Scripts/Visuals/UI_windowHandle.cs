@@ -9,20 +9,39 @@ using UnityEngine.UIElements;
 
 public class UI_windowHandle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public bool doing;
     public Vector2Int action;
     public RectTransform targetTransform;
+    public bool doing;
     public bool hovered;
 
     private void Start()
     {
         MGR_game.input.OnInputReady += InputCallbacks;
     }
-
     void InputCallbacks()
     {
         MGR_game.input.input.General.LMB.started += OnPointerDown;
         MGR_game.input.input.General.LMB.canceled += OnPointerUp;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        hovered = true;
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        hovered = false;
+    }
+    void OnPointerDown(InputAction.CallbackContext ctx)
+    {
+        if (hovered)
+        {
+            doing = true;
+        }
+
+    }
+    void OnPointerUp(InputAction.CallbackContext ctx)
+    {
+        doing = false;
     }
 
     void Update()
@@ -64,19 +83,6 @@ public class UI_windowHandle : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (action == new Vector2Int(-1, -1)) ChangeCursor(WindowsCursor.DoublePointedArrowPointingNortheastAndSouthwest); // bottom left
     }
 
-    void OnPointerDown(InputAction.CallbackContext ctx)
-    {
-        if (hovered)
-        {
-            doing = true;
-        }
-
-    }
-
-    void OnPointerUp(InputAction.CallbackContext ctx)
-    {
-        doing = false;
-    }
 
     public enum WindowsCursor
     {
@@ -109,12 +115,4 @@ public class UI_windowHandle : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [DllImport("user32.dll", EntryPoint = "LoadCursor")]
     public static extern IntPtr LoadCursor(IntPtr hInstance, int lpCursorName);
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        hovered = true;
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        hovered = false;
-    }
 }

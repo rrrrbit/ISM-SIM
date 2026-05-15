@@ -68,6 +68,7 @@ public class MGR_visuals : MonoBehaviour
 	private void Start()
 	{
         MGR_game.mtx.OnReadyForVisualisation += Init;
+		MGR_game.input.OnInputReady += NodeInputCallbacks;
 	}
 
 	private void Update()
@@ -89,6 +90,7 @@ public class MGR_visuals : MonoBehaviour
 			newNode.transform.position = Random.insideUnitCircle * 10;
 
 			visualNodes.Add(newNode);
+			
 		}
 
 
@@ -109,6 +111,18 @@ public class MGR_visuals : MonoBehaviour
 		AddEdgeDrawer(MGR_game.mtx.IN, visualIdeas, visualNodes, "EdgeDrawer_IN");
 		AddEdgeDrawer(MGR_game.mtx.II, visualIdeas, visualIdeas, "EdgeDrawer_II");
     }
+
+	void NodeInputCallbacks()
+	{
+		foreach (Visual_Node node in visualNodes)
+		{
+			node.InputCallbacks();
+		}
+		foreach (Visual_Node node in visualIdeas)
+		{
+			node.InputCallbacks();
+		}
+	}
 
 	void AddEdgeDrawer(float[,] mtx, List<Visual_Node> nodesFrom, List<Visual_Node> nodesTo, string name = "EdgeDrawer")
 	{

@@ -1,27 +1,39 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class UI_bg : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public bool dragging;
+    public bool hovered;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        MGR_game.input.OnInputReady += InputCallbacks;
     }
-
-    void IPointerEnterHandler.OnPointerEnter(UnityEngine.EventSystems.PointerEventData eventData)
+    void InputCallbacks()
     {
-        print("over bg");
+        MGR_game.input.input.General.LMB.started += OnPointerDown;
+        MGR_game.input.input.General.LMB.canceled += OnPointerUp;
     }
-
-    void IPointerExitHandler.OnPointerExit(UnityEngine.EventSystems.PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        print("mouse exit bg");
+        hovered = true;
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        hovered = false;
+    }
+    void OnPointerDown(InputAction.CallbackContext ctx)
+    {
+        if (hovered)
+        {
+            dragging = true;
+        }
+
+    }
+    void OnPointerUp(InputAction.CallbackContext ctx)
+    {
+        dragging = false;
     }
 }
