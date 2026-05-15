@@ -38,7 +38,7 @@ public class Visual_NodeSocial : Visual_Node
 
     public override void Select()
     {
-        MGR_game.levelUI.FocusNodeViewer(this);
+        MGR_game.levelUI.TryFocusNodeViewer(this);
     }
 
     private void FixedUpdate()

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using static MGR_visuals;
 
-public class Visual_Node : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Visual_Node : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 	public int id;
 	public bool onScreen = true;
@@ -33,14 +33,12 @@ public class Visual_Node : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void InputCallbacks()
     {
-        print("eoug");
         MGR_game.input.input.General.LMB.started += OnPointerDown;
         MGR_game.input.input.General.LMB.canceled += OnPointerUp;
     }
 
     public void OnPointerDown(InputAction.CallbackContext ctx)
     {
-        print("sjkfdgh");
         if (hovered)
         {
             dragging = true;
@@ -49,6 +47,11 @@ public class Visual_Node : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerUp(InputAction.CallbackContext ctx)
     {
         dragging = false;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Select();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

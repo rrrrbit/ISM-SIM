@@ -1,4 +1,4 @@
-using RBitUtils;
+ using RBitUtils;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,7 +17,7 @@ public class Visual_NodeIdea : Visual_Node
 
     public override void Select()
     {
-        MGR_game.levelUI.FocusNodeViewer(this);
+        MGR_game.levelUI.TryFocusNodeViewer(this);
     }
 
     private void FixedUpdate()

@@ -40,8 +40,8 @@ public class GameCamera : MonoBehaviour
         prevZoom = currentZoom;
         MGR_game.input.OnInputReady += AddCallbacks;
         zoomEasingSettings.token.Reload += InitZoomEasing;
-        cameras = GetComponentsInChildren<Camera>();
         InitZoomEasing();
+        cameras = GetComponentsInChildren<Camera>();
     }
 
     void Update()

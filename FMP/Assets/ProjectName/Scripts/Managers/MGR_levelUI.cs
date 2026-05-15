@@ -7,6 +7,7 @@ public class MGR_levelUI : MonoBehaviour
     public Canvas canvas;
     public UI_nodeViewer nodeViewer;
     public UI_bg bg;
+    public Visual_NodeSelection selection;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,16 +21,22 @@ public class MGR_levelUI : MonoBehaviour
         
     }
 
-    public void FocusNodeViewer(Visual_Node node)
+    public void TryFocusNodeViewer(Visual_Node node)
     {
+        if (nodeViewer.nodeIndex == node.id)
+        {
+            UnfocusNodeViewer();
+            return;
+        }
         nodeViewer.nodeIndex = node.id;
-        nodeViewer.gameObject.SetActive(true);
+        selection.target = node.transform;
+        selection.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void UnfocusNodeViewer()
     {
         nodeViewer.nodeIndex = -1;
-        nodeViewer.gameObject.SetActive(false);
+        selection.GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public void FocusIdeaViewer(Visual_Node node)

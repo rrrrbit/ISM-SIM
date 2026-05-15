@@ -11,6 +11,8 @@ public class UI_nodeViewer : MonoBehaviour
     public RectTransform ideaBarsContainer;
     public GameObject[] ideaBars;
     public GameObject ideaBarPrefab;
+
+    [SerializeField] float fadeLength = 0.05f;
     
     void Start()
     {
@@ -18,7 +20,19 @@ public class UI_nodeViewer : MonoBehaviour
     }
     void Update()
     {
-        UpdateViewer();
+        float a = GetComponent<CanvasGroup>().alpha;
+        if (nodeIndex == -1)
+        {
+            a = Mathf.MoveTowards(a, 0, Time.deltaTime / fadeLength);
+            GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
+        else
+        {
+            UpdateViewer();
+            a = Mathf.MoveTowards(a, 1, Time.deltaTime / fadeLength);
+            GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
+        GetComponent<CanvasGroup>().alpha = a;
     }
 
     void InitIdeaBars()

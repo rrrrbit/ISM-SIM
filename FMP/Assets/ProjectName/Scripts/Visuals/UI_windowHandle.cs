@@ -33,6 +33,7 @@ public class UI_windowHandle : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
     void OnPointerDown(InputAction.CallbackContext ctx)
     {
+        print("clicked");
         if (hovered)
         {
             doing = true;
