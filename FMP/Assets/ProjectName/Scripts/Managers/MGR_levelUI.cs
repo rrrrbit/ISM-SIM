@@ -11,7 +11,7 @@ public class MGR_levelUI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        UnfocusNodeViewer();   
     }
 
     // Update is called once per frame
@@ -23,11 +23,13 @@ public class MGR_levelUI : MonoBehaviour
     public void FocusNodeViewer(Visual_Node node)
     {
         nodeViewer.nodeIndex = node.id;
+        nodeViewer.gameObject.SetActive(true);
     }
 
     public void UnfocusNodeViewer()
     {
-
+        nodeViewer.nodeIndex = -1;
+        nodeViewer.gameObject.SetActive(false);
     }
 
     public void FocusIdeaViewer(Visual_Node node)
