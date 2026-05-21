@@ -1616,7 +1616,6 @@ GameObject:
   - component: {fileID: 562323773}
   - component: {fileID: 562323772}
   - component: {fileID: 562323771}
-  - component: {fileID: 562323774}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1685,19 +1684,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &562323774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 562323770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3453a4afb09568a48aba6eaa78b50e1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  es: {fileID: 0}
 --- !u!1 &564968365
 GameObject:
   m_ObjectHideFlags: 0
@@ -2484,9 +2470,7 @@ MonoBehaviour:
     complexity: -16
     complexityTolerance:
       center: -16
-      peak: 1
       width: 1
-      steepness: 2
     enthusiasm:
       thresholdPos: 0
       thresholdNeg: 0
@@ -2509,9 +2493,7 @@ MonoBehaviour:
     complexity: 16
     complexityTolerance:
       center: 16
-      peak: 1
       width: 4
-      steepness: 2
     enthusiasm:
       thresholdPos: 32
       thresholdNeg: 32
@@ -3357,7 +3339,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 744623401}
   m_HandleRect: {fileID: 744623400}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

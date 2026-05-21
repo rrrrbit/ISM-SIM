@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
-
 public class MGR_mtx : MonoBehaviour
 {
 #region vars
@@ -14,9 +12,6 @@ public class MGR_mtx : MonoBehaviour
 
     public int startingNumberPeople;
 	public int startingNumberIdeas;
-    [Header("Lists")]
-	public List<PersonNode> nodes;
-    public List<IdeaNode> ideas;
     [Header("Matrices")]
 	public float[,] NN;
     public float[,] NI;
@@ -43,8 +38,8 @@ public class MGR_mtx : MonoBehaviour
     public NodeStats[] ideaExemplar;
     #endregion
 
-    #region subclasses
-    
+#region subclasses
+
     [Serializable]
     public struct NodeStats
     {
@@ -57,6 +52,30 @@ public class MGR_mtx : MonoBehaviour
         public float extroversion;
         public float avoidance;
 
+        public float[] AsArr()
+        {
+            return new float[] {
+                complexity,
+                complexityTolerance.width,
+                complexityTolerance.center,
+                enthusiasm.strengthPos,
+                enthusiasm.strengthNeg,
+                enthusiasm.thresholdPos,
+                enthusiasm.thresholdNeg,
+                reach,
+                suggestibility.strengthPos,
+                suggestibility.strengthNeg,
+                suggestibility.thresholdPos,
+                suggestibility.thresholdNeg,
+                adherence.strengthPos,
+                adherence.strengthNeg,
+                adherence.thresholdPos,
+                adherence.thresholdNeg,
+                extroversion,
+                avoidance,
+            };
+        }
+
         public static NodeStats operator +(NodeStats a, NodeStats b) => new()
         {
             complexity = a.complexity + b.complexity,
@@ -67,6 +86,28 @@ public class MGR_mtx : MonoBehaviour
             adherence = a.adherence + b.adherence,
             extroversion = a.extroversion + b.extroversion,
             avoidance = a.avoidance + b.avoidance,
+        };
+        public static NodeStats operator -(NodeStats a, NodeStats b) => new()
+        {
+            complexity = a.complexity - b.complexity,
+            complexityTolerance = a.complexityTolerance - b.complexityTolerance,
+            enthusiasm = a.enthusiasm - b.enthusiasm,
+            reach = a.reach - b.reach,
+            suggestibility = a.suggestibility - b.suggestibility,
+            adherence = a.adherence - b.adherence,
+            extroversion = a.extroversion - b.extroversion,
+            avoidance = a.avoidance - b.avoidance,
+        };
+        public static NodeStats operator *(NodeStats a, NodeStats b) => new()
+        {
+            complexity = a.complexity * b.complexity,
+            complexityTolerance = a.complexityTolerance * b.complexityTolerance,
+            enthusiasm = a.enthusiasm * b.enthusiasm,
+            reach = a.reach * b.reach,
+            suggestibility = a.suggestibility * b.suggestibility,
+            adherence = a.adherence * b.adherence,
+            extroversion = a.extroversion * b.extroversion,
+            avoidance = a.avoidance * b.avoidance,
         };
         public static NodeStats operator *(NodeStats a, float b) => new()
         {
@@ -79,6 +120,18 @@ public class MGR_mtx : MonoBehaviour
             extroversion = a.extroversion * b,
             avoidance = a.avoidance * b,
         };
+
+        public static float ArithDifference(NodeStats a, NodeStats b)
+        {
+            float[] d = (a - b).AsArr();
+            return ManualSum(-1, 18, n => Mathf.Abs(d[n])) / 18;
+        }
+
+        public static float GeoDifference(NodeStats a, NodeStats b)
+        {
+            float[] d = (a - b).AsArr();
+            return Mathf.Pow(ManualProd(-1, 18, n => Mathf.Abs(d[n])), 1/18);
+        }
     }
     [Serializable]
 
@@ -99,6 +152,20 @@ public class MGR_mtx : MonoBehaviour
             thresholdPos = a.thresholdPos + b.thresholdPos,
             strengthNeg = a.strengthNeg + b.strengthNeg,
             strengthPos = a.strengthPos + b.strengthPos,
+        };
+        public static MagicCurve operator -(MagicCurve a, MagicCurve b) => new()
+        {
+            thresholdNeg = a.thresholdNeg - b.thresholdNeg,
+            thresholdPos = a.thresholdPos - b.thresholdPos,
+            strengthNeg = a.strengthNeg - b.strengthNeg,
+            strengthPos = a.strengthPos - b.strengthPos,
+        };
+        public static MagicCurve operator *(MagicCurve a, MagicCurve b) => new()
+        {
+            thresholdNeg = a.thresholdNeg * b.thresholdNeg,
+            thresholdPos = a.thresholdPos * b.thresholdPos,
+            strengthNeg = a.strengthNeg * b.strengthNeg,
+            strengthPos = a.strengthPos * b.strengthPos,
         };
         public static MagicCurve operator *(MagicCurve a, float b) => new()
         {
@@ -148,6 +215,16 @@ public class MGR_mtx : MonoBehaviour
             center = a.center + b.center,
             width = a.width + b.width,
         };
+        public static BumpCurve operator -(BumpCurve a, BumpCurve b) => new()
+        {
+            center = a.center - b.center,
+            width = a.width - b.width,
+        };
+        public static BumpCurve operator *(BumpCurve a, BumpCurve b) => new()
+        {
+            center = a.center * b.center,
+            width = a.width * b.width,
+        };
         public static BumpCurve operator *(BumpCurve a, float b) => new()
         {
             center = a.center * b,
@@ -165,12 +242,24 @@ public class MGR_mtx : MonoBehaviour
             }
             return total;
         }
+
+        public static float Eval(float x, float width)
+        {
+            float xp = x / width;
+            float total = Mathf.Exp(-xp * xp);
+            if (!float.IsFinite(total))
+            {
+                Debug.LogWarning("caught NaN in bumpCurve");
+                return 0;
+            }
+            return total;
+        }
     }
     #endregion
 
 #region utilities
 
-    float ManualSum(int excludeInd, int range, Func<int, float> func)
+    public static float ManualSum(int excludeInd, int range, Func<int, float> func)
     {
         float accm = 0;
         for (int i = 0; i < range; i++)
@@ -183,6 +272,23 @@ public class MGR_mtx : MonoBehaviour
                 continue;
             }
             accm += nanCatch;
+        }
+        return accm;
+    }
+
+    public static float ManualProd(int excludeInd, int range, Func<int, float> func)
+    {
+        float accm = 0;
+        for (int i = 0; i < range; i++)
+        {
+            if (i == excludeInd) continue; // skip self
+            var nanCatch = func(i);
+            if (!float.IsFinite(nanCatch)) // skip breakages
+            {
+                Debug.LogWarning("caught NaN in sum at index " + i);
+                continue;
+            }
+            accm *= nanCatch;
         }
         return accm;
     }
@@ -211,8 +317,9 @@ public class MGR_mtx : MonoBehaviour
 
 #region main
     void Start()
-    {   
-        InitLists();
+    {
+        nodesCount = startingNumberPeople;
+        ideasCount = startingNumberIdeas;
         InitStats();
         InitMtx();
 
@@ -253,24 +360,6 @@ public class MGR_mtx : MonoBehaviour
         }
     }
 
-    void InitLists()
-    {
-        nodes = new List<PersonNode>(startingNumberPeople);
-        for (int i = 0; i < startingNumberPeople; i++)
-        {
-            nodes.Add(new PersonNode());
-        }
-
-        ideas = new List<IdeaNode>(startingNumberIdeas);
-        for (int i = 0; i < startingNumberIdeas; i++)
-        {
-            ideas.Add(new IdeaNode());
-        }
-
-        nodesCount = nodes.Count();
-        ideasCount = ideas.Count();
-    }
-
     void InitStats()
     {
         #region default curves
@@ -286,23 +375,6 @@ public class MGR_mtx : MonoBehaviour
         {
             thresholdPos = 10,
             thresholdNeg = 10,
-
-            strengthPos = 2,
-            strengthNeg = 2,
-        };
-
-        MagicCurve socDecMinCurve = new()
-        {
-            thresholdPos = 5,
-            thresholdNeg = 5,
-
-            strengthPos = .5f,
-            strengthNeg = .5f,
-        };
-        MagicCurve socDecMaxCurve = new()
-        {
-            thresholdPos = 20,
-            thresholdNeg = 20,
 
             strengthPos = 2,
             strengthNeg = 2,
@@ -589,11 +661,8 @@ public class MGR_mtx : MonoBehaviour
     float CalcDeltaNN(int n, int m)
     {
         float social = ManualSum(n, nodesCount, x => NN[x, m] * NN[n, x]) + nodeStats[m].reach;
-        //float social = ManualSumInd(n, nodes.Count, x =>
-        //    MagicCurve(NN.mtx[x, m] * NN.mtx[n, x], nodeSuggestibility[n])
-        //    ) + nodeReach[m];
         float ideological = ManualSum(-1, ideasCount, x => IN[x,m] * NI[n, x]);
-        //float nn2 = NN[n, m] * NN[n, m];
+
         float dScaled;
         if (NN[n, m] >= 0)
         {
@@ -619,24 +688,6 @@ public class MGR_mtx : MonoBehaviour
 
     #endregion
 
-}
-
-[Serializable]
-public class Node
-{
-	public Visual_Node visual;
-	public static implicit operator Visual_Node(Node node) => node.visual;
-}
-
-public class PersonNode : Node
-{
-
-}
-
-public class IdeaNode : Node
-{
-    //public Visual_Node visual;
-    //public static implicit operator Visual_Node(Node node) => node.visual;
 }
 
 public static class MtxUtils
